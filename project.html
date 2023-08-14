@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Project</title>
+    <script src="https://kit.fontawesome.com/a760cfa7f1.js" crossorigin="anonymous"></script>
+    <style>
+        *{
+            box-sizing: border-box;
+            margin: 0;
+        }
+        #heading{
+           align-items: center;
+           display: flex;
+           justify-content: center;
+           margin:2rem 0rem 3rem;
+        }
+        #heading span,#heading i{
+            color: #5098e8;
+        }
+        #container{
+            display: flex;
+            justify-content: center;
+            margin: 0 5rem;
+        }
+        .wrapper{
+            border: 1px solid lightgray;
+            height: 70vh;
+            flex-grow: 1;
+        }
+        #image-container{
+            display: flex;
+            justify-content: center;
+            position: relative;
+        }
+        #image-text{
+            position: absolute;
+            top: 25%;
+            width: 155px;
+            height: 245px;
+            overflow: hidden;
+            color: white;
+            font-size: 20px;
+        }
+        img{
+            height: 100%;
+        }
+        #shirt-modifier{
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: space-evenly;
+        }
+        .color-item{
+            width: 30px;
+            height: 30px;
+            border-radius: 15px;
+            margin: 0 0.25rem;
+        }
+        .color-item:hover{
+            cursor: pointer;
+        }
+        #black{
+            background: black;
+        }
+        #gray{
+            background: gray;
+        }
+        #purple{
+            background: #744e83;
+        }
+        #green{
+            background: green;
+        }
+        #yellow{
+            background: yellow;
+        }
+        #variant-picker{
+            display: flex;
+            justify-content: center;
+        }
+        hr{
+            width: 90%;
+            background-color: lightgray;
+        }
+        textarea{
+            width: 70%;
+            resize: none;
+        }
+        #button-wrapper{
+            width: 70%;
+            display: flex;
+            justify-content: space-between;
+        }
+        .font-button{
+            width: 30px;
+            height: 30px;
+        }
+        #font-size-wrapper{
+            width: 70%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        #font-size{
+            width: 50px;
+            height: 30px;
+            text-align: center;
+        }
+        @media screen and (max-width:768px) {
+            #container{
+                flex-direction: column;
+                margin: 0;
+            }
+            #image-container{
+                height: auto;
+                object-fit: contain;
+                width: 100%;
+            }
+            img{
+                width: 100%;
+            }
+        }
+        
+    </style>
+
+</head>
+<body>
+    <h2 id="heading"><i class="fa-solid fa-shirt"></i>T-shirt &nbsp<span> Designer</span></h2>
+    <div id="container">
+        <div class="wrapper" id="image-container">
+            <img src="" alt="" id="image">
+            <div id="image-text"></div>
+        </div>
+        <div class="wrapper" id="shirt-modifier">
+           <h2><strong>Shirt Variant</strong></h2>
+            <div id="variant-picker">
+                <div class="color-item" id="black" onclick="black()"></div>
+                <div class="color-item" id="gray" onclick="gray()"></div>
+                <div class="color-item" id="purple" onclick="purple()"></div>
+                <div class="color-item" id="green" onclick="green()"></div>
+                <div class="color-item" id="yellow" onclick="yellow()"></div>
+            </div>
+            <hr>
+            <h2><strong>Text Style </strong></h2>
+            <textarea name="" id="text-input" cols="30" rows="5" placeholder="type here" oninput="textChange()"></textarea>
+            <div id="button-wrapper">
+                <input class="font-button" type="color" id="font-color" oninput="colorChange()" value="#ffffff">
+                <button class="font-button" id="font-bold" onclick="fontBold()"><i class="fa-solid fa-bold"></i></button>
+                <button class="font-button" id="font-italic" onclick="fontItalic()"><i class="fa-solid fa-italic"></i></button>
+                <button class="font-button" id="font-left" onclick="fontLeft()"><i class="fa-solid fa-align-left"></i></button>
+                <button class="font-button" id="font-center" onclick="fontCenter()"><i class="fa-solid fa-align-center"></i></button>
+                <button class="font-button" id="font-right" onclick="fontRight()"><i class="fa-solid fa-align-right"></i></button>
+            </div>
+            <div id="font-size-wrapper">
+                <p>Text Size :</p>
+                <div>
+                    <button id="add-2" class="font-button" onclick="textSizeAdd()">+</button>
+                    <input type="text" value="" id="font-size" oninput="textSize();restrictToNumbers(this)" pattern="[0-9]*">
+                    <button id="minus-2" class="font-button" onclick="textSizeSub()">-</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+    <script>
+        
+        
+        function removeBorder() {
+            let shirtVariants= document.getElementsByClassName("color-item")
+            for(let i = 0; i <= (shirtVariants).length - 1 ; ++i){
+                shirtVariants[i].style.border ="none"
+            }
+        }
+        document.getElementById("image").src = "./images/black.png";
+        document.getElementById("black").style.border = "3px solid #5098e8";
+
+        function black() {
+            
+            removeBorder()
+            document.getElementById("image").src = "./images/black.png";
+            document.getElementById("black").style.border = "3px solid #5098e8";
+        }
+        function gray() {
+            removeBorder()
+            document.getElementById("image").src = "./images/gray.png"
+            document.getElementById("gray").style.border = "3px solid #5098e8";
+        }
+        function green() {
+            removeBorder()
+            document.getElementById("image").src = "./images/green.png"
+            document.getElementById("green").style.border = "3px solid #5098e8";
+        }
+        function purple() {
+            removeBorder()
+            document.getElementById("image").src = "./images/purple.png"
+            document.getElementById("purple").style.border = "3px solid #5098e8";
+        }
+        function yellow() {
+            removeBorder()
+            document.getElementById("image").src = "./images/yellow.png"
+            document.getElementById("yellow").style.border = "3px solid #5098e8";
+        }
+        // document.getElementById("text-input").value ="Hello World";
+        // let textInput = document.getElementById("text-input").value;
+        // document.getElementById("image-text").innerText = textInput
+        
+        let imageText = document.getElementById("image-text")
+        function textChange() {
+            let textInput = document.getElementById("text-input").value;
+            imageText.innerText = textInput
+            
+            }
+            function colorChange() {
+                let fontColor = document.getElementById("font-color").value
+            imageText.style.color = fontColor
+        }
+        function fontBold() {
+            if (imageText.style.fontWeight == "bold") {
+                imageText.style.fontWeight="normal"
+                document.getElementById("font-bold").style.border = "none"
+            } else {
+                imageText.style.fontWeight="bold"
+                document.getElementById("font-bold").style.border = "3px solid black"
+                
+            }
+        }
+
+        function fontItalic() {
+            if (imageText.style.fontStyle == "italic") {
+                imageText.style.fontStyle="normal"
+                document.getElementById("font-italic").style.border = "none"
+            } else {
+                imageText.style.fontStyle="italic"
+                document.getElementById("font-italic").style.border = "3px solid black"
+                
+            }
+        }
+        imageText.style.textAlign="left"
+        document.getElementById("font-left").style.border = "3px solid black"
+
+        function fontAlignButton() {
+            if (imageText.style.textAlign == "left") {
+                document.getElementById("font-left").style.border = "3px solid black"
+                document.getElementById("font-center").style.border = "none"
+                document.getElementById("font-right").style.border = "none"
+            }
+            else if(imageText.style.textAlign == "center") {
+                document.getElementById("font-left").style.border = "none"
+                document.getElementById("font-center").style.border = "3px solid black"
+                document.getElementById("font-right").style.border = "none"
+            }
+            if (imageText.style.textAlign == "right") {
+                document.getElementById("font-left").style.border = "none"
+                document.getElementById("font-center").style.border = "none"
+                document.getElementById("font-right").style.border = "3px solid black"
+            }
+        }
+
+
+
+        function fontLeft() {
+            if (imageText.style.textAlign == "left") {
+                imageText.style.textAlign="right"
+                fontAlignButton()
+            } else {
+                imageText.style.textAlign="left"
+                fontAlignButton()
+                
+            }
+        }
+
+
+        function fontCenter() {
+            if (imageText.style.textAlign == "center") {
+                imageText.style.textAlign="left"
+                fontAlignButton()
+            } else {
+                imageText.style.textAlign="center"
+                fontAlignButton()
+                
+            }
+        }
+
+
+        function fontRight() {
+            if (imageText.style.textAlign == "right") {
+                imageText.style.textAlign="left"
+                fontAlignButton()
+            } else {
+                imageText.style.textAlign="right"
+                fontAlignButton()
+                
+            }
+        }
+
+        imageText.style.fontSize = "20"
+        document.getElementById("font-size").value = "20"
+
+        function textSize() {
+            let size = document.getElementById("font-size").value;
+            imageText.style.fontSize = size +"px"
+        }
+        function textSizeAdd() {
+            let size = document.getElementById("font-size").value;
+            size= size*1;
+            size+=2;
+            document.getElementById("font-size").value = size
+            imageText.style.fontSize = size +"px";
+        }
+        function textSizeSub() {
+            let size = document.getElementById("font-size").value;
+            size= size*1;
+            size-=2;
+            document.getElementById("font-size").value = size
+            imageText.style.fontSize = size +"px";
+        }
+
+        function restrictToNumbers(input) {
+            input.value = input.value.replace(/\D/g, ''); // Remove non-numeric characters
+        }
+
+        </script>
+</body>
+</html>
